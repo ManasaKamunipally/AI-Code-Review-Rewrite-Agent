@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AI Code Review & Rewrite Agent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .pulse-button {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
+        }
+        .slide-in {
+            animation: slideIn 1s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.3;
+            animation: particleFloat 10s infinite linear;
+        }
+        @keyframes particleFloat {
+            from { transform: translateY(100vh) rotate(0deg); }
+            to { transform: translateY(-100px) rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen flex items-center justify-center p-4">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-10 -left-10 w-40 h-40 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 floating"></div>
+        <div class="absolute -top-10 -right-10 w-40 h-40 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 floating" style="animation-delay: 2s;"></div>
+        <div class="absolute -bottom-10 left-20 w-40 h-40 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 floating" style="animation-delay: 4s;"></div>
+        
+        <!-- Floating Circles -->
+        <div class="particle" style="left: 10%; animation-delay: 0s;">
+            <div class="w-16 h-16 bg-blue-400 rounded-full opacity-60"></div>
+        </div>
+        <div class="particle" style="left: 20%; animation-delay: 1s;">
+            <div class="w-12 h-12 bg-green-400 rounded-full opacity-50"></div>
+        </div>
+        <div class="particle" style="left: 30%; animation-delay: 2s;">
+            <div class="w-20 h-20 bg-purple-400 rounded-full opacity-40"></div>
+        </div>
+        <div class="particle" style="left: 40%; animation-delay: 3s;">
+            <div class="w-8 h-8 bg-red-400 rounded-full opacity-70"></div>
+        </div>
+        <div class="particle" style="left: 50%; animation-delay: 4s;">
+            <div class="w-14 h-14 bg-yellow-400 rounded-full opacity-55"></div>
+        </div>
+        <div class="particle" style="left: 60%; animation-delay: 5s;">
+            <div class="w-18 h-18 bg-indigo-400 rounded-full opacity-45"></div>
+        </div>
+        <div class="particle" style="left: 70%; animation-delay: 6s;">
+            <div class="w-10 h-10 bg-pink-400 rounded-full opacity-65"></div>
+        </div>
+        <div class="particle" style="left: 80%; animation-delay: 7s;">
+            <div class="w-16 h-16 bg-teal-400 rounded-full opacity-50"></div>
+        </div>
+        <div class="particle" style="left: 90%; animation-delay: 8s;">
+            <div class="w-12 h-12 bg-orange-400 rounded-full opacity-60"></div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative z-10 w-full max-w-md">
+        <!-- Logo and Title -->
+        <div class="text-center mb-6 slide-in">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-2xl mb-3 floating">
+                <i class="fas fa-code text-2xl text-purple-600"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-white mb-2">🤖 AI Code Agent</h1>
+            <p class="text-purple-100 text-sm">Review & Rewrite Code with AI</p>
+        </div>
+
+        <!-- Login Card -->
+        <div class="bg-white rounded-2xl shadow-2xl p-8">
+            <h2 class="text-xl font-semibold text-gray-800 mb-6 text-center">Welcome Back</h2>
+            
+            <form id="loginForm" class="space-y-6">
+                <!-- Email Input -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-envelope mr-2"></i>Email Address
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent shadow-sm"
+                        placeholder="you@example.com"
+                        required
+                    >
+                </div>
+
+                <!-- Password Input -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-lock mr-2"></i>Password
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent shadow-sm"
+                            placeholder="••••••••"
+                            required
+                        >
+                        <button 
+                            type="button" 
+                            onclick="togglePassword()" 
+                            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        >
+                            <i id="toggleIcon" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Remember Me & Forgot Password -->
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500">
+                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                    </label>
+                    <a href="#" class="text-sm text-purple-600 hover:text-purple-800 transition">Forgot password?</a>
+                </div>
+
+                <!-- Login Button -->
+                <button 
+                    type="submit" 
+                    class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition duration-200 pulse-button flex items-center justify-center space-x-2"
+                >
+                    <i class="fas fa-rocket"></i>
+                    <span>Launch to Dashboard</span>
+                </button>
+            </form>
+
+            <!-- Social Login Buttons -->
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="socialLogin('google')" class="flex items-center justify-center px-4 py-2 rounded-lg hover:bg-gray-50 transition">
+                    <i class="fab fa-google text-red-500 mr-2"></i>
+                    <span class="text-sm font-medium">Google</span>
+                </button>
+                <button onclick="socialLogin('github')" class="flex items-center justify-center px-4 py-2 rounded-lg hover:bg-gray-50 transition">
+                    <i class="fab fa-github text-gray-800 mr-2"></i>
+                    <span class="text-sm font-medium">GitHub</span>
+                </button>
+            </div>
+
+            <!-- Sign Up Link -->
+            <div class="text-center">
+                <p class="text-gray-700 font-medium">
+                    Don't have an account? 
+                    <a href="signup.html" class="font-bold text-purple-600 hover:text-purple-800 transition underline decoration-2 underline-offset-2">Sign up</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Social login function
+        function socialLogin(provider) {
+            // Show loading state
+            const button = event.target.closest('button');
+            const originalContent = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Connecting...';
+            button.disabled = true;
+
+            // Simulate social login (demo mode)
+            setTimeout(() => {
+                // Store login session
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userEmail', `user@${provider}.com`);
+                localStorage.setItem('loginProvider', provider);
+                
+                // Show success message
+                alert(`Successfully connected with ${provider.charAt(0).toUpperCase() + provider.slice(1)}!`);
+                
+                // Redirect to main app
+                window.location.href = 'index.html';
+            }, 1500);
+        }
+
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple validation (in production, this would be server-side)
+            if (email && password) {
+                // Store login session
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('isLoggedIn', 'true');
+                
+                // Redirect to main app
+                window.location.href = 'index.html';
+            } else {
+                alert('Please enter both email and password');
+            }
+        });
+
+        // Check if user is already logged in
+        window.addEventListener('load', function() {
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                // Remove automatic redirect - let user stay on login page
+                console.log('User already logged in');
+            }
+        });
+    </script>
+</body>
+</html>
